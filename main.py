@@ -47,22 +47,22 @@ def test_binary_search():
 	assert binary_search([1,2,3,4,5],1) == 0
 
 
-def time_search(search_fn, mylist, key):
-  start=time.time()
-  search_fn(mylist,key)
-  end=time.time()
-  totaltime=(end-start)*1000
-  return totaltime
-  
-	### TODO
 
-def compare_search(sizes=[1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7]):
+
+
+def time_search(search_fn, mylist, key):
+  start=time.time()*1000
+  search_fn(mylist,key)
+  return ((time.time()*1000)-start)
+  
+
+def compare_search(sizes=[1e1, 1e2, 1e3, 1e4]):
 	time_search_list = []
 	for size in sizes:
-		mylist = list(range(size))
-		binary_search_time = time_search(binary_search, mylist,-1)
+		mylist = list(range(int(size)))
 		linear_search_time = time_search(linear_search, mylist,-1)
-		time_search_list.append((size, binary_search_time, linear_search_time))
+		binary_search_time = time_search(binary_search, mylist,-1)
+		time_search_list.append((size, linear_search_time, binary_search_time))
 	return time_search_list
 
 """
@@ -96,3 +96,4 @@ def test_compare_search():
 	assert res[1][0] == 100
 	assert res[0][1] < 1
 	assert res[1][1] < 1
+print_results(compare_search())
